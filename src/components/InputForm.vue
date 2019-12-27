@@ -15,14 +15,19 @@
           </div>
 
           <div class="field">
-            <label class="label">Interest Rate: </label>
+            <label class="label">Interest Rate:</label>
             <div class="control">
-              <input class="input" v-model="interestRate" v-on:click="updateInterest" placeholder="3.75" />
+              <input
+                class="input"
+                v-model="interestRate"
+                v-on:click="updateInterest"
+                placeholder="3.75"
+              />
               <p class="right-aligned">{{ (interestRate / 100) | toPercent }}</p>
             </div>
           </div>
           <div class="field">
-            <label class="label">Amortization (In Years): </label>
+            <label class="label">Amortization (In Years):</label>
             <div class="control">
               <input class="input" v-model="loanYears" placeholder="30" />
               <p class="right-aligned">{{ loanYears || 0 }}</p>
@@ -90,7 +95,11 @@ export default {
       this.interestRate = this.interestRate / 100;
     },
     renderTable() {
-      this.output = getTable(this.principalValue, this.interestRate, this.loanYears);
+      this.output = getTable(
+        this.principalValue,
+        this.interestRate,
+        this.loanYears
+      );
     }
   }
 };
