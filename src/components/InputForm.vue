@@ -3,13 +3,12 @@
     <div class="hero-body">
       <div class="container">
         <div class="box">
+          <img src="../assets/logo.png" class="center" />
           <h1 class="title">Amortization Schedule Generator</h1>
-
           <div class="field">
             <label class="label">Principal:</label>
-
             <div class="control">
-              <input class="input" v-model="principalValue" placeholder="1000000" />
+              <input class="input" v-model="principalValue" placeholder="1000000" autofocus />
               <p class="right-aligned">{{ principalValue | toUSD }}</p>
             </div>
           </div>
@@ -26,6 +25,7 @@
               <p class="right-aligned">{{ (interestRate / 100) | toPercent }}</p>
             </div>
           </div>
+
           <div class="field">
             <label class="label">Amortization (In Years):</label>
             <div class="control">
@@ -33,28 +33,22 @@
               <p class="right-aligned">{{ loanYears || 0 }}</p>
             </div>
           </div>
-          <button class="button" id="submitButton" v-on:click="renderTable()">Submit</button>
+
+          <button
+            class="button"
+            id="submitButton"
+            v-on:click="submitButton();"
+            v-if="submitted == false"
+          >Submit</button>
+          <button class="button" id="submitButton" v-on:click="submitButton();" v-else>Clear</button>
         </div>
         <div class="box">
-          <div class="table-container">
-            <table class="table is-hoverable is-fullwidth is-striped">
-              <thead class="thead">
-                <tr class="table-head">
-                  <th>#</th>
-                  <th>Interest</th>
-                  <th>Principal</th>
-                  <th>Payment</th>
-                  <th>Total Interest</th>
-                  <th>Remaining Balance</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="i in output" v-bind:key="i">
-                  <td class="table-row" v-for="j in i" v-bind:key="j">{{ j }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <AmortizationTable
+            v-bind:pv="principalValue"
+            v-bind:interest="interestRate"
+            v-bind:years="loanYears"
+            v-if="submitted == true"
+          />
         </div>
       </div>
     </div>
@@ -62,7 +56,8 @@
 </template>
 
 <script>
-import getTable from "../calculator.js";
+import AmortizationTable from "./Table.vue";
+
 export default {
   name: "InputForm",
   data() {
@@ -70,8 +65,7 @@ export default {
       principalValue: 0,
       interestRate: 0,
       loanYears: 0,
-      output: [],
-      clicked: false
+      submitted: false
     };
   },
 
@@ -94,13 +88,18 @@ export default {
     updateInterest() {
       this.interestRate = this.interestRate / 100;
     },
-    renderTable() {
-      this.output = getTable(
-        this.principalValue,
-        this.interestRate,
-        this.loanYears
-      );
+    displayTable() {
+      this.showTable = true;
+    },
+    submitButton() {
+      this.submitted = !this.submitted;
     }
+  },
+  components: {
+    AmortizationTable
+  },
+  created: () => {
+    this.submitted = false;
   }
 };
 </script>
@@ -110,11 +109,18 @@ input {
   text-align: right;
 }
 
-.table-row {
-  text-align: left;
-}
-
 .right-aligned {
   text-align: right;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 330px;
+  height: 150px;
+}
+h1 {
+  text-align: center;
 }
 </style>
