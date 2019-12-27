@@ -8,7 +8,7 @@
           <div class="field">
             <label class="label">Principal:</label>
             <div class="control">
-              <input class="input" v-model="principalValue" placeholder="1000000" autofocus />
+              <input class="input" v-model="principalValue" placeholder="100,000" />
               <p class="right-aligned">{{ principalValue | toUSD }}</p>
             </div>
           </div>
@@ -62,9 +62,9 @@ export default {
   name: "InputForm",
   data() {
     return {
-      principalValue: 0,
-      interestRate: 0,
-      loanYears: 0,
+      principalValue: "",
+      interestRate: "",
+      loanYears: "",
       submitted: false
     };
   },
@@ -87,9 +87,6 @@ export default {
   methods: {
     updateInterest() {
       this.interestRate = this.interestRate / 100;
-    },
-    displayTable() {
-      this.showTable = true;
     },
     submitButton() {
       this.submitted = !this.submitted;

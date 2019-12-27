@@ -1,6 +1,13 @@
 const Finance = require('financejs');
 const finance = new Finance();
 
+function toUSD(v) {
+return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2
+    }).format(v);
+}
 function getTable(pv, ir, durationInYears) {
     var nper = durationInYears * 12;
     var annualInterest = ir / 100;
@@ -20,11 +27,11 @@ function getTable(pv, ir, durationInYears) {
         array.push(
             [
                 i,
-                `$${ipmt.toLocaleString()}`,
-                `$${ppmt.toLocaleString()}`,
-                `$${pmt.toLocaleString()}`,
-                `$${totalInterest.toLocaleString()}`,
-                `$${pv.toLocaleString()}`
+                toUSD(ipmt),
+                toUSD(ppmt),
+                toUSD(pmt),
+                toUSD(totalInterest),
+                toUSD(pv)
             ]
         )
 
