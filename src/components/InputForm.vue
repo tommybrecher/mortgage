@@ -4,44 +4,14 @@
       <div class="container">
         <div class="box">
           <img src="../assets/logo.png" class="center" />
-          <h1 class="title">Amortization Schedule Generator</h1>
-          <div class="field">
-            <label class="label">Principal:</label>
-            <div class="control">
-              <input class="input" v-model="principalValue" placeholder="100,000" />
-              <p class="right-aligned">{{ principalValue | toUSD }}</p>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">Interest Rate:</label>
-            <div class="control">
-              <input
-                class="input"
-                v-model="interestRate"
-                v-on:click="updateInterest"
-                placeholder="3.75"
-              />
-              <p class="right-aligned">{{ (interestRate / 100) | toPercent }}</p>
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">Amortization (In Years):</label>
-            <div class="control">
-              <input class="input" v-model="loanYears" placeholder="30" />
-              <p class="right-aligned">{{ loanYears || 0 }}</p>
-            </div>
-          </div>
-
-          <button
-            class="button"
-            id="submitButton"
-            v-on:click="submitButton();"
-            v-if="submitted == false"
-          >Submit</button>
-          <button class="button" id="submitButton" v-on:click="submitButton();" v-else>Clear</button>
+          <h1 class="title">Amortization Schedule</h1>
+          <field v-model="principalValue" label="Principal Value: " format="currency"></field>
+          <field v-model="interestRate" label="Interest Rate: " format="percent"></field>
+          <field v-model="loanYears" label="Amortization (In Years): "></field>
+          <button class="button" v-on:click="submitButton();" v-if="submitted == false">Submit</button>
+          <button class="button" v-on:click="submitButton();" v-else>Clear</button>
         </div>
+
         <div class="box">
           <AmortizationTable
             v-bind:pv="principalValue"
@@ -57,14 +27,15 @@
 
 <script>
 import AmortizationTable from "./Table.vue";
+import Field from "./Field.vue";
 
 export default {
   name: "InputForm",
   data() {
     return {
-      principalValue: "",
-      interestRate: "",
-      loanYears: "",
+      principalValue: 0,
+      interestRate: 0,
+      loanYears: 0,
       submitted: false
     };
   },
@@ -85,15 +56,13 @@ export default {
     }
   },
   methods: {
-    updateInterest() {
-      this.interestRate = this.interestRate / 100;
-    },
     submitButton() {
       this.submitted = !this.submitted;
     }
   },
   components: {
-    AmortizationTable
+    AmortizationTable,
+    Field
   },
   created: () => {
     this.submitted = false;
@@ -102,10 +71,6 @@ export default {
 </script>
 
 <style scoped>
-input {
-  text-align: right;
-}
-
 .right-aligned {
   text-align: right;
 }
