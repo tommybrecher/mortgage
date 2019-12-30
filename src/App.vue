@@ -1,13 +1,13 @@
 <template>
-  <InputForm />
+  <bootstrap-form />
 </template>
 
 <script>
-import InputForm from "./components/InputForm.vue";
+import BootstrapForm from "./components/BootstrapForm";
 export default {
   name: "app",
   components: {
-    InputForm
+    BootstrapForm
   }
 };
 </script>

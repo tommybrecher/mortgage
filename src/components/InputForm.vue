@@ -13,7 +13,7 @@
         </div>
 
         <div class="box">
-          <AmortizationTable
+          <amortization-table
             v-bind:pv="principalValue"
             v-bind:interest="interestRate"
             v-bind:years="loanYears"
@@ -38,22 +38,6 @@ export default {
       loanYears: 0,
       submitted: false
     };
-  },
-
-  filters: {
-    toUSD(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2
-      }).format(v);
-    },
-    toPercent(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "percent",
-        maximumFractionDigits: 5
-      }).format(v);
-    }
   },
   methods: {
     submitButton() {
