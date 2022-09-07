@@ -1,13 +1,16 @@
-const Finance = require('financejs');
+// const Finance = require('financejs');
+import Finance from "financejs"
+
 const finance = new Finance();
 
 function toUSD(v) {
-return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 2
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 2
     }).format(v);
 }
+
 function getTable(pv, ir, durationInYears) {
     var nper = durationInYears * 12;
     var annualInterest = ir / 100;

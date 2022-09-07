@@ -4,12 +4,30 @@
     <div class="control">
       <input
         class="input"
-        v-bind:value="value"
-        @input="$emit('input', $event.target.value)"
+        :value="value"
+        @input="$emit('update:Value', $event.target.value)"
         onclick="select();"
       />
-      <p class="aligned-r" v-if="format === 'currency'">{{ value | toUSD }}</p>
-      <p class="aligned-r" v-else-if="format === 'percent'">{{ value/100 | toPercent }}</p>
+
+      <p class="aligned-r" v-if="format === 'currency'">
+        {{
+          Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 2,
+          }).format(value)
+        }}
+      </p>
+
+      <p class="aligned-r" v-else-if="format === 'percent'">
+        {{
+          Intl.NumberFormat("en-US", {
+            style: "percent",
+            maximumFractionDigits: 5,
+          }).format(value / 100)
+        }}
+      </p>
+
       <p class="aligned-r" v-else>{{ value }}</p>
     </div>
   </div>
@@ -20,24 +38,10 @@ export default {
   name: "Field",
   props: {
     label: String,
+    format: String,
     value: Number,
-    format: String
   },
-  filters: {
-    toUSD(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2
-      }).format(v);
-    },
-    toPercent(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "percent",
-        maximumFractionDigits: 5
-      }).format(v);
-    }
-  }
+  emits: ["update:Value"],
 };
 </script>
 
