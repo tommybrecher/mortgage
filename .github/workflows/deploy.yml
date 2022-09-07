@@ -1,0 +1,45 @@
+name: Deploy Latest code
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:  
+
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ssh-key: ${{ secrets.DEPLOY_KEY }}
+        persist-credentials: true
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Create local changes and push upstream
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        yarn run build
+        cd dist
+        git init
+        git add -A
+        git commit -m "$(git log --pretty=oneline --abbrev-commit | head -n1 | cut -d ' ' -f 2-)" -a
+        git push -f git@github.com:tommybrecher/tommybrecher.github.io.git master
+    
+    # - name: Push changes
+    #   uses: ad-m/github-push-action@master
+    #   with:
+    #     ssh: true
+    #     branch: ${{ github.ref }}
+    #     force: true
+    #     repository: tommybrecher/tommybrecher.github.io
