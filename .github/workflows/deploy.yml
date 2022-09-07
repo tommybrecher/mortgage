@@ -29,10 +29,12 @@ jobs:
       run: |
         yarn install
         yarn run build
+        COMMIT_MSG=$(git log --pretty=oneline --abbrev-commit | head -n1 | cut -d ' ' -f 2-)
         cd dist
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
+        git config --global init.defaultBranch "master"
         git init
         git add -A
-        git commit -m "$(git log --pretty=oneline --abbrev-commit | head -n1 | cut -d ' ' -f 2-)" -a
+        git commit -m "${COMMIT_MSG}" -a
         git push -f git@github.com:tommybrecher/tommybrecher.github.io.git master
