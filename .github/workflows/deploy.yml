@@ -37,7 +37,6 @@ jobs:
         git init
         git add -A
         git commit -m "${COMMIT_MSG}" -a
-        git push -f git@github.com:tommybrecher/tommybrecher.github.io.git master
 
     - name: Push changes
       uses: ad-m/github-push-action@master
