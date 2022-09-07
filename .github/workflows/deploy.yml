@@ -45,3 +45,4 @@ jobs:
         force: true
         github_token: ${{ secrets.DEPLOY_TOKEN }}
         directory: /home/runner/work/mortgage/mortgage/dist/
+        repository: tommybrecher/tommybrecher.github.io
