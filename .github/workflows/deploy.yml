@@ -44,4 +44,4 @@ jobs:
         branch: master
         force: true
         github_token: ${{ secrets.DEPLOY_TOKEN }}
-        directory: $GITHUB_WORKSPACE/dist
+        directory: /home/runner/work/mortgage/mortgage/dist/
