@@ -1,42 +1,38 @@
 {
-  "name": "mortage",
-  "version": "0.1.0",
+  "name": "mortgage",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
-    "bulma": "^0.8.0",
-    "core-js": "^3.4.3",
+    "bulma": "^0.9.4",
     "financejs": "^4.1.0",
-    "vue": "^2.6.10"
+    "node-sass": "^7.0.1",
+    "sass": "^1.54.8",
+    "vue": "^3.2.38"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.13.0",
-    "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "@vitejs/plugin-vue": "^1.6.1",
+    "eslint": "^8.23.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "sass-loader": "^8.0.2",
+    "vite": "^2.5.4",
+    "webpack": "^4.36.0"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "es2021": true
     },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

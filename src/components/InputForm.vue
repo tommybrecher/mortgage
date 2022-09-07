@@ -5,19 +5,33 @@
         <div class="box">
           <img src="../assets/logo.png" class="center" />
           <h1 class="title">Amortization Schedule</h1>
-          <field v-model="principalValue" label="Principal Value: " format="currency"></field>
-          <field v-model="interestRate" label="Interest Rate: " format="percent"></field>
-          <field v-model="loanYears" label="Amortization (In Years): "></field>
-          <button class="button" v-on:click="submitButton();" v-if="submitted == false">Submit</button>
-          <button class="button" v-on:click="submitButton();" v-else>Clear</button>
+          <field
+            v-model:value="principal"
+            label="Principal"
+            format="currency"
+          />
+          <field
+            v-model:value="interest"
+            label="Interest Rate"
+            format="percent"
+          />
+          <field v-model:value="years" label="Amortization (In Years)" />
+          <button
+            class="button"
+            @click="submitButton()"
+            v-if="submitted == false"
+          >
+            Submit
+          </button>
+          <button class="button" @click="submitButton()" v-else>Clear</button>
         </div>
 
         <div class="box">
           <AmortizationTable
-            v-bind:pv="principalValue"
-            v-bind:interest="interestRate"
-            v-bind:years="loanYears"
-            v-if="submitted == true"
+            :pv="principal"
+            :interest="interest"
+            :years="years"
+            v-if="submitted"
           />
         </div>
       </div>
@@ -33,40 +47,21 @@ export default {
   name: "InputForm",
   data() {
     return {
-      principalValue: 0,
-      interestRate: 0,
-      loanYears: 0,
-      submitted: false
+      principal: 0,
+      interest: 0,
+      years: 0,
+      submitted: false,
     };
-  },
-
-  filters: {
-    toUSD(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2
-      }).format(v);
-    },
-    toPercent(v) {
-      return new Intl.NumberFormat("en-US", {
-        style: "percent",
-        maximumFractionDigits: 5
-      }).format(v);
-    }
   },
   methods: {
     submitButton() {
       this.submitted = !this.submitted;
-    }
+    },
   },
   components: {
     AmortizationTable,
-    Field
+    Field,
   },
-  created: () => {
-    this.submitted = false;
-  }
 };
 </script>
 

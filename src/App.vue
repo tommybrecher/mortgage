@@ -3,11 +3,12 @@
 </template>
 
 <script>
-import InputForm from "./components/InputForm.vue";
+import InputForm from "@/components/InputForm.vue";
+
 export default {
   name: "app",
   components: {
-    InputForm
-  }
+    InputForm,
+  },
 };
 </script>

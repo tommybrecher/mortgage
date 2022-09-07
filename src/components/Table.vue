@@ -28,14 +28,13 @@ export default {
   props: {
     pv: Number,
     interest: Number,
-    years: Number
+    years: Number,
   },
   data() {
     return {
-      output: getTable(this.pv, this.interest, this.years)
+      output: getTable(this.pv, this.interest, this.years),
     };
   },
-  created: {}
 };
 </script>
 
